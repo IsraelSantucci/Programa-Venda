@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Built-By: israel
+Build-Jdk: 14.0.2
+Main-Class: br.com.santucci.venda.view.TelaPrincipal
+Created-By: Maven Integration for Eclipse
+
