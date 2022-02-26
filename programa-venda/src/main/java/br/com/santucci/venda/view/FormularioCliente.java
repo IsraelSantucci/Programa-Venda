@@ -121,6 +121,7 @@ public class FormularioCliente extends JFrame {
 		txtCodigo.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtCodigo.setColumns(10);
 		txtCodigo.setBounds(94, 105, 87, 25);
+		txtCodigo.setEditable(false);
 		panel.add(txtCodigo);
 
 		JLabel lblCpf = new JLabel("Cpf:");
@@ -150,13 +151,17 @@ public class FormularioCliente extends JFrame {
 		try {
 			// lança uma exceçao se tiver algo de errado
 			this.validarDados();
-
-			int codigo = Integer.valueOf(txtCodigo.getText());
+			int codigo = txtCodigo.getText().equals("")? -1 : Integer.parseInt(txtCodigo.getText());
+			ClienteDAO dao = new ClienteDAO();
+			if(codigo == -1) {
+				codigo = dao.getClientes().size();
+			}
+		
+			
 			String nome = txtNome.getText();
 			String cpf = ftxtCpf.getText();
 
 			String[] data = ftxtDataDeNascimento.getText().split("/");
-			System.out.println(ftxtDataDeNascimento.getText());
 			int dia = Integer.valueOf(data[0]);
 			int mes = Integer.valueOf(data[1]);
 			int ano = Integer.valueOf(data[2]);
@@ -165,7 +170,7 @@ public class FormularioCliente extends JFrame {
 			System.out.println(ano);
 			LocalDate dataDeNascimento = LocalDate.of(ano, mes, dia);
 			Cliente cliente = new Cliente(codigo, nome, cpf, dataDeNascimento);
-			ClienteDAO dao = new ClienteDAO();
+			
 			dao.salvar(cliente);
 			carregarTabela();
 			limparCampos();
@@ -199,13 +204,10 @@ public class FormularioCliente extends JFrame {
 
 	private void validarDados() {
 
-		if (txtCodigo.getText().isEmpty()) {
-			throw new IllegalArgumentException("O campo Código deve ser prenchido");
-		}
 		
-		if(!txtCodigo.getText().matches("^\\d+$")) {
-			throw new IllegalArgumentException("O campo Código Invalido");
-		}
+//		if(!txtCodigo.getText().matches("^\\d+$")) {
+//			throw new IllegalArgumentException("O campo Código Invalido");
+//		}
 
 		if (txtNome.getText().isEmpty()) {
 			throw new IllegalArgumentException("O campo nome deve ser prenchido");

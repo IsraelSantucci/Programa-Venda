@@ -224,6 +224,7 @@ public class FormularioVenda extends JFrame {
 		carregarComboBoxCliente();
 		carregarComboBoxProdutos();
 		txtQuantidade.setText("");
+		lblTotal.setText("0");
 		table.setModel(new DefaultTableModel());
 		
 	}
