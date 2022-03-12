@@ -1,4 +1,4 @@
-package br.com.santucci.venda.model;
+package br.com.santucci.venda.model.entity;
 
 import java.io.Serializable;
 

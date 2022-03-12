@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.santucci.venda.model.Produto;
+import br.com.santucci.venda.model.entity.Produto;
 
 public class ModeloTabelaProduto extends AbstractTableModel{
 	

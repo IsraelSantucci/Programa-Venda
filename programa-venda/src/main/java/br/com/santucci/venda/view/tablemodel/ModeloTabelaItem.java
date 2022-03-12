@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.santucci.venda.model.Item;
+import br.com.santucci.venda.model.entity.Item;
 
 public class ModeloTabelaItem extends AbstractTableModel{
 	

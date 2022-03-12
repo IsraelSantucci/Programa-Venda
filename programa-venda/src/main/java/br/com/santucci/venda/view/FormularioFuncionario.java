@@ -14,8 +14,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import br.com.santucci.venda.dao.FuncionarioDAO;
-import br.com.santucci.venda.model.Funcionario;
+import br.com.santucci.venda.model.dao.FuncionarioDAO;
+import br.com.santucci.venda.model.entity.Funcionario;
 import br.com.santucci.venda.view.tablemodel.ModeloTabelaFuncionarios;
 
 public class FormularioFuncionario extends JFrame {

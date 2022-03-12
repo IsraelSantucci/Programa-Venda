@@ -5,8 +5,6 @@ import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import br.com.santucci.venda.model.Cliente;
-
 public class ModeloComboBox<T> extends AbstractListModel implements ComboBoxModel {
 
 	private List<T> lista;

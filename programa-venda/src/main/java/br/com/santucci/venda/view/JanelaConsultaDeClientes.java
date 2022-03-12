@@ -19,9 +19,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import br.com.santucci.venda.dao.ClienteDAO;
-import br.com.santucci.venda.model.Cliente;
-import br.com.santucci.venda.model.Compra;
+import br.com.santucci.venda.model.dao.ClienteDAO;
+import br.com.santucci.venda.model.entity.Cliente;
+import br.com.santucci.venda.model.entity.Compra;
 import br.com.santucci.venda.view.tablemodel.ModeloListaCliente;
 import br.com.santucci.venda.view.tablemodel.ModeloListaCompra;
 

@@ -1,4 +1,4 @@
-package br.com.santucci.venda.dao;
+package br.com.santucci.venda.model.dao;
 
 import java.io.File;
 import java.io.FileInputStream;

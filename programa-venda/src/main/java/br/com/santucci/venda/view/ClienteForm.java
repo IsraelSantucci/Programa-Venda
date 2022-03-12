@@ -5,8 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -22,15 +21,17 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
-import br.com.santucci.venda.dao.ClienteDAO;
-import br.com.santucci.venda.model.Cliente;
+import br.com.santucci.venda.controller.ClienteController;
+import br.com.santucci.venda.model.dao.ClienteDAO;
+import br.com.santucci.venda.model.entity.Cliente;
+import br.com.santucci.venda.model.service.ClienteService;
 import br.com.santucci.venda.view.tablemodel.ModeloTabelaCliente;
 
-public class FormularioCliente extends JFrame {
+public class ClienteForm extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNome;
-	private JTable tableClientes;
+	private JTable tabelaClientes;
 	private JTextField txtCodigo;
 	private JFormattedTextField ftxtDataDeNascimento;
 	private JFormattedTextField ftxtCpf;
@@ -42,7 +43,7 @@ public class FormularioCliente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormularioCliente frame = new FormularioCliente();
+					ClienteForm frame = new ClienteForm();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +57,7 @@ public class FormularioCliente extends JFrame {
 	 * 
 	 * @throws ParseException
 	 */
-	public FormularioCliente() throws ParseException {
+	public ClienteForm() throws ParseException {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1133, 656);
 		contentPane = new JPanel();
@@ -88,8 +89,8 @@ public class FormularioCliente extends JFrame {
 		scrollPane.setBounds(31, 332, 1053, 243);
 		panel.add(scrollPane);
 
-		tableClientes = new JTable();
-		scrollPane.setViewportView(tableClientes);
+		tabelaClientes = new JTable();
+		scrollPane.setViewportView(tabelaClientes);
 
 		carregarTabela();
 
@@ -121,7 +122,7 @@ public class FormularioCliente extends JFrame {
 		txtCodigo.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtCodigo.setColumns(10);
 		txtCodigo.setBounds(94, 105, 87, 25);
-		txtCodigo.setEditable(false);
+		
 		panel.add(txtCodigo);
 
 		JLabel lblCpf = new JLabel("Cpf:");
@@ -144,37 +145,21 @@ public class FormularioCliente extends JFrame {
 	}
 
 	private void acaoBotaoEditar(ActionEvent e) {
-		
+		if(this.getTabelaClientes().getSelectedRow() < 0) {
+			System.out.println("selecione um cliente para editar");
+		}else {
+			ClienteController controller = new ClienteController();
+			controller.executaEdicao(this);
+		}
 	}
 
 	private void acaoBotaoCadastrar(ActionEvent e) {
 		try {
-			// lança uma exceçao se tiver algo de errado
 			this.validarDados();
-			int codigo = txtCodigo.getText().equals("")? -1 : Integer.parseInt(txtCodigo.getText());
-			ClienteDAO dao = new ClienteDAO();
-			if(codigo == -1) {
-				codigo = dao.getClientes().size();
-			}
-		
 			
-			String nome = txtNome.getText();
-			String cpf = ftxtCpf.getText();
-
-			String[] data = ftxtDataDeNascimento.getText().split("/");
-			int dia = Integer.valueOf(data[0]);
-			int mes = Integer.valueOf(data[1]);
-			int ano = Integer.valueOf(data[2]);
-			System.out.println(dia);
-			System.out.println(mes);
-			System.out.println(ano);
-			LocalDate dataDeNascimento = LocalDate.of(ano, mes, dia);
-			Cliente cliente = new Cliente(codigo, nome, cpf, dataDeNascimento);
-			
-			dao.salvar(cliente);
-			carregarTabela();
+			ClienteController controller = new ClienteController();
+			controller.executaCadastro(this);
 			limparCampos();
-
 		} catch (IllegalArgumentException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage(), "Atenção", JOptionPane.ERROR_MESSAGE);
 			
@@ -182,7 +167,7 @@ public class FormularioCliente extends JFrame {
 	}
 
 	private void acaoBotaoExcluir(ActionEvent e) {
-		int indice = tableClientes.getSelectedRow();
+		int indice = tabelaClientes.getSelectedRow();
 		if(indice >= 0) {
 			ClienteDAO dao = new ClienteDAO();
 			int decisao = JOptionPane.showConfirmDialog(this, "Deseja excluir o Cliente " + dao.pequisar(indice).getNome(),
@@ -198,16 +183,22 @@ public class FormularioCliente extends JFrame {
 	private void carregarTabela() {
 		ClienteDAO dao = new ClienteDAO();
 		ModeloTabelaCliente modelo = new ModeloTabelaCliente(dao.getClientes());
-		tableClientes.setModel(modelo);
+		tabelaClientes.setModel(modelo);
 		configurarTabela();
 	}
 
+	public void carregarTabelateste(List<Cliente> clientes) {	
+		ModeloTabelaCliente modelo = new ModeloTabelaCliente(clientes);
+		tabelaClientes.setModel(modelo);
+		configurarTabela();
+	}
+	
 	private void validarDados() {
 
 		
-//		if(!txtCodigo.getText().matches("^\\d+$")) {
-//			throw new IllegalArgumentException("O campo Código Invalido");
-//		}
+		if(!txtCodigo.getText().matches("^\\d+$")) {
+			throw new IllegalArgumentException("O campo Código Invalido");
+		}
 
 		if (txtNome.getText().isEmpty()) {
 			throw new IllegalArgumentException("O campo nome deve ser prenchido");
@@ -249,31 +240,31 @@ public class FormularioCliente extends JFrame {
 		DefaultTableCellRenderer centro = new DefaultTableCellRenderer();
 		centro.setHorizontalAlignment(SwingConstants.CENTER);
 
-		tableClientes.getColumnModel().getColumn(0).setCellRenderer(centro);
-		tableClientes.getColumnModel().getColumn(0).setMaxWidth(100);
-		tableClientes.getColumnModel().getColumn(0).setPreferredWidth(40);
-		tableClientes.getColumnModel().getColumn(0).setResizable(false);
+		tabelaClientes.getColumnModel().getColumn(0).setCellRenderer(centro);
+		tabelaClientes.getColumnModel().getColumn(0).setMaxWidth(100);
+		tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(40);
+		tabelaClientes.getColumnModel().getColumn(0).setResizable(false);
 
-		tableClientes.getColumnModel().getColumn(1).setCellRenderer(centro);
-		tableClientes.getColumnModel().getColumn(1).setResizable(false);
-		tableClientes.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tabelaClientes.getColumnModel().getColumn(1).setCellRenderer(centro);
+		tabelaClientes.getColumnModel().getColumn(1).setResizable(false);
+		tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(100);
 
-		tableClientes.getColumnModel().getColumn(2).setCellRenderer(centro);
-		tableClientes.getColumnModel().getColumn(2).setResizable(false);
-		tableClientes.getColumnModel().getColumn(2).setPreferredWidth(100);
-		tableClientes.getColumnModel().getColumn(2).setMaxWidth(100);
+		tabelaClientes.getColumnModel().getColumn(2).setCellRenderer(centro);
+		tabelaClientes.getColumnModel().getColumn(2).setResizable(false);
+		tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tabelaClientes.getColumnModel().getColumn(2).setMaxWidth(100);
 
-		tableClientes.getColumnModel().getColumn(3).setCellRenderer(centro);
-		tableClientes.getColumnModel().getColumn(3).setResizable(false);
-		tableClientes.getColumnModel().getColumn(3).setPreferredWidth(100);
-		tableClientes.getColumnModel().getColumn(3).setMaxWidth(100);
+		tabelaClientes.getColumnModel().getColumn(3).setCellRenderer(centro);
+		tabelaClientes.getColumnModel().getColumn(3).setResizable(false);
+		tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tabelaClientes.getColumnModel().getColumn(3).setMaxWidth(100);
 
-		tableClientes.getColumnModel().getColumn(4).setCellRenderer(centro);
-		tableClientes.getColumnModel().getColumn(4).setResizable(false);
-		tableClientes.getColumnModel().getColumn(4).setPreferredWidth(100);
-		tableClientes.getColumnModel().getColumn(4).setMaxWidth(100);
+		tabelaClientes.getColumnModel().getColumn(4).setCellRenderer(centro);
+		tabelaClientes.getColumnModel().getColumn(4).setResizable(false);
+		tabelaClientes.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tabelaClientes.getColumnModel().getColumn(4).setMaxWidth(100);
 
-		tableClientes.getTableHeader().setReorderingAllowed(false);
+		tabelaClientes.getTableHeader().setReorderingAllowed(false);
 
 	}
 	
@@ -282,5 +273,26 @@ public class FormularioCliente extends JFrame {
 		txtNome.setText("");
 		ftxtCpf.setText("");
 		ftxtDataDeNascimento.setText("");
+	}
+	
+	public JTextField getTxtCodigo() {
+		return txtCodigo;
+	}
+	
+	public JTextField getTxtNome() {
+		return txtNome;
+	}
+	
+	public JFormattedTextField getFtxtCpf() {
+		return ftxtCpf;
+	}
+	
+	public JFormattedTextField getFtxtDataDeNascimento() {
+		return ftxtDataDeNascimento;
+	}
+	
+	
+	public JTable getTabelaClientes() {
+		return tabelaClientes;
 	}
 }

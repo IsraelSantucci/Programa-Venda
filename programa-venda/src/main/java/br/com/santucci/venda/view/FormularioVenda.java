@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,11 +24,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import br.com.santucci.venda.dao.ClienteDAO;
-import br.com.santucci.venda.dao.ProdutoDAO;
-import br.com.santucci.venda.model.Compra;
-import br.com.santucci.venda.model.Item;
-import br.com.santucci.venda.model.Produto;
+import br.com.santucci.venda.model.dao.ClienteDAO;
+import br.com.santucci.venda.model.dao.ProdutoDAO;
+import br.com.santucci.venda.model.entity.Compra;
+import br.com.santucci.venda.model.entity.Item;
+import br.com.santucci.venda.model.entity.Produto;
 import br.com.santucci.venda.view.tablemodel.ModeloComboBox;
 import br.com.santucci.venda.view.tablemodel.ModeloTabelaItem;
 

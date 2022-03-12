@@ -1,12 +1,11 @@
 package br.com.santucci.venda.view.tablemodel;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import br.com.santucci.venda.dao.ClienteDAO;
-import br.com.santucci.venda.model.Cliente;
+import br.com.santucci.venda.model.dao.ClienteDAO;
+import br.com.santucci.venda.model.entity.Cliente;
 
 public class ModeloListaCliente extends AbstractListModel{
 

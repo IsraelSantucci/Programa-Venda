@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import br.com.santucci.venda.model.Compra;
+import br.com.santucci.venda.model.entity.Compra;
 
 public class ModeloListaCompra extends AbstractListModel{
 

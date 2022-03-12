@@ -1,4 +1,4 @@
-package br.com.santucci.venda.dao;
+package br.com.santucci.venda.model.dao;
 
 import java.io.EOFException;
 import java.io.File;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import br.com.santucci.venda.model.Funcionario;
+import br.com.santucci.venda.model.entity.Funcionario;
 
 public class FuncionarioDAO {
 

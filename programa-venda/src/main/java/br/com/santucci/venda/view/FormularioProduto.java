@@ -17,8 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
-import br.com.santucci.venda.dao.ProdutoDAO;
-import br.com.santucci.venda.model.Produto;
+import br.com.santucci.venda.model.dao.ProdutoDAO;
+import br.com.santucci.venda.model.entity.Produto;
 import br.com.santucci.venda.view.tablemodel.ModeloTabelaProduto;
 
 public class FormularioProduto extends JFrame {

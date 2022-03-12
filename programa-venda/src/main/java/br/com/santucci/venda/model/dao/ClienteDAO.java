@@ -1,11 +1,11 @@
-package br.com.santucci.venda.dao;
+package br.com.santucci.venda.model.dao;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import br.com.santucci.venda.model.Cliente;
-import br.com.santucci.venda.model.Compra;
+import br.com.santucci.venda.model.entity.Cliente;
+import br.com.santucci.venda.model.entity.Compra;
 
 public class ClienteDAO {
 

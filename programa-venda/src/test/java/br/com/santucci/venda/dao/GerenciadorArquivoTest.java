@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import br.com.santucci.venda.model.dao.GerenciadorDeArquivo;
+
 class GerenciadorArquivoTest {
 
 	@Test

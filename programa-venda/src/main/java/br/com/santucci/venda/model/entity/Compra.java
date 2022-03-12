@@ -1,11 +1,10 @@
-package br.com.santucci.venda.model;
+package br.com.santucci.venda.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Compra implements Serializable {

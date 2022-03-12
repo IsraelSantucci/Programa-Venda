@@ -1,4 +1,4 @@
-package br.com.santucci.venda.model;
+package br.com.santucci.venda.model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class Cliente implements Serializable {
@@ -15,7 +14,7 @@ public class Cliente implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int codigo;
+	private Integer codigo;
 	private String nome;
 	private String cpf;
 	private LocalDate dataDeNacimento;
@@ -39,7 +38,7 @@ public class Cliente implements Serializable {
 
 	}
 
-	public int getCodigo() {
+	public Integer getCodigo() {
 		return codigo;
 	}
 

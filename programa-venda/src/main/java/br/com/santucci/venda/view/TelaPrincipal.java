@@ -67,9 +67,9 @@ public class TelaPrincipal extends JFrame {
 		JMenuItem mntmNovoCliente = new JMenuItem("clientes");
 		mnCadastrar.add(mntmNovoCliente);
 		mntmNovoCliente.addActionListener(e -> {
-			FormularioCliente formCliente;
+			ClienteForm formCliente;
 			try {
-				formCliente = new FormularioCliente();
+				formCliente = new ClienteForm();
 				formCliente.setVisible(true);
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
