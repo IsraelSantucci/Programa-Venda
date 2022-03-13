@@ -52,13 +52,11 @@ public class ClienteController implements InterfaceController{
 
 	public LocalDate validarData(String dataDeNascimento) {
 		String[] data = dataDeNascimento.split("/");
-		//System.out.println(ftxtDataDeNascimento.getText());
+		
 		int dia = Integer.valueOf(data[0]);
 		int mes = Integer.valueOf(data[1]);
 		int ano = Integer.valueOf(data[2]);
-		System.out.println(dia);
-		System.out.println(mes);
-		System.out.println(ano);
+		
 		return LocalDate.of(ano, mes, dia);
 	}
 	

@@ -30,11 +30,21 @@ import br.com.santucci.venda.view.tablemodel.ModeloTabelaCliente;
 public class ClienteForm extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField txtNome;
+	private JPanel panel;
+	private JLabel lblTituloDoFormulario;
+	private JLabel lblCodigo;
+	private JLabel lblNome;
+	private JLabel lblCpf;
+	private JLabel lblDataDeNascimento;
+	private JScrollPane scrollPane;
 	private JTable tabelaClientes;
 	private JTextField txtCodigo;
+	private JTextField txtNome;
 	private JFormattedTextField ftxtDataDeNascimento;
 	private JFormattedTextField ftxtCpf;
+	private JButton btnCadastrar;
+	private JButton btnEditar;
+	private JButton btnExcluir;
 
 	/**
 	 * Launch the application.
@@ -58,65 +68,30 @@ public class ClienteForm extends JFrame {
 	 * @throws ParseException
 	 */
 	public ClienteForm() throws ParseException {
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1133, 656);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		panel = new JPanel();
 		panel.setLayout(null);
+		contentPane.add(panel, BorderLayout.CENTER);
 
-		JLabel lblCadastroDeClientes = new JLabel("Cadastro De Clientes");
-		lblCadastroDeClientes.setBounds(322, 10, 283, 31);
-		lblCadastroDeClientes.setFont(new Font("Tahoma", Font.BOLD, 25));
-		panel.add(lblCadastroDeClientes);
-
-		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNome.setBounds(191, 104, 66, 25);
-		panel.add(lblNome);
-
-		txtNome = new JTextField();
-		txtNome.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNome.setBounds(267, 105, 399, 25);
-		panel.add(txtNome);
-		txtNome.setColumns(10);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 332, 1053, 243);
-		panel.add(scrollPane);
-
-		tabelaClientes = new JTable();
-		scrollPane.setViewportView(tabelaClientes);
-
-		carregarTabela();
-
-		JButton btnCadastrar = new JButton("Cadastrar");
+		lblTituloDoFormulario = new JLabel("Cadastro De Clientes");
+		lblTituloDoFormulario.setBounds(322, 10, 283, 31);
+		lblTituloDoFormulario.setFont(new Font("Tahoma", Font.BOLD, 25));
 		
-		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnCadastrar.setBounds(31, 228, 142, 31);
-		btnCadastrar.addActionListener(e -> acaoBotaoCadastrar(e));
-		panel.add(btnCadastrar);
-
-		JButton btnEditar = new JButton("editar");
-		btnEditar.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnEditar.setBounds(187, 228, 131, 31);
-		btnEditar.addActionListener(e -> acaoBotaoEditar(e));
-		panel.add(btnEditar);
-
-		JButton btnExcluir = new JButton("excluir");
-		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnExcluir.setBounds(328, 228, 131, 31);
-		btnExcluir.addActionListener(e -> acaoBotaoExcluir(e));
-		panel.add(btnExcluir);
-
-		JLabel lblCod = new JLabel("Cod:");
-		lblCod.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblCod.setBounds(31, 105, 56, 25);
-		panel.add(lblCod);
+		panel.add(lblTituloDoFormulario);
+		
+		lblCodigo = new JLabel("Cod:");
+		lblCodigo.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblCodigo.setBounds(31, 105, 56, 25);
+		
+		panel.add(lblCodigo);
 
 		txtCodigo = new JTextField();
 		txtCodigo.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -125,33 +100,74 @@ public class ClienteForm extends JFrame {
 		
 		panel.add(txtCodigo);
 
-		JLabel lblCpf = new JLabel("Cpf:");
+		lblNome = new JLabel("Nome:");
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNome.setBounds(191, 104, 66, 25);
+		
+		panel.add(lblNome);
+
+		txtNome = new JTextField();
+		txtNome.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtNome.setBounds(267, 105, 399, 25);
+		txtNome.setColumns(10);
+		
+		panel.add(txtNome);	
+
+		lblCpf = new JLabel("Cpf:");
 		lblCpf.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblCpf.setBounds(677, 104, 42, 25);
 		panel.add(lblCpf);
 
 		ftxtCpf = new JFormattedTextField(new MaskFormatter("###.###.###.##"));
 		ftxtCpf.setBounds(729, 104, 283, 26);
+		
 		panel.add(ftxtCpf);
 
-		JLabel lblDataDeNasc = new JLabel("Data de Nascimento:");
-		lblDataDeNasc.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblDataDeNasc.setBounds(31, 157, 211, 25);
-		panel.add(lblDataDeNasc);
+		lblDataDeNascimento = new JLabel("Data de Nascimento:");
+		lblDataDeNascimento.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblDataDeNascimento.setBounds(31, 157, 211, 25);
+		
+		panel.add(lblDataDeNascimento);
 
 		ftxtDataDeNascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
 		ftxtDataDeNascimento.setBounds(252, 157, 142, 26);
+		
 		panel.add(ftxtDataDeNascimento);
+		
+		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnCadastrar.setBounds(31, 228, 142, 31);
+		btnCadastrar.addActionListener(e -> acaoBotaoCadastrar(e));
+		
+		panel.add(btnCadastrar);
+
+		btnEditar = new JButton("editar");
+		btnEditar.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnEditar.setBounds(187, 228, 131, 31);
+		btnEditar.addActionListener(e -> acaoBotaoEditar(e));
+		
+		panel.add(btnEditar);
+
+		btnExcluir = new JButton("excluir");
+		btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnExcluir.setBounds(328, 228, 131, 31);
+		btnExcluir.addActionListener(e -> acaoBotaoExcluir(e));
+		
+		panel.add(btnExcluir);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(31, 332, 1053, 243);
+		
+		panel.add(scrollPane);
+
+		tabelaClientes = new JTable();
+		
+		scrollPane.setViewportView(tabelaClientes);
+
+		carregarTabela();
 	}
 
-	private void acaoBotaoEditar(ActionEvent e) {
-		if(this.getTabelaClientes().getSelectedRow() < 0) {
-			System.out.println("selecione um cliente para editar");
-		}else {
-			ClienteController controller = new ClienteController();
-			controller.executaEdicao(this);
-		}
-	}
+	
 
 	private void acaoBotaoCadastrar(ActionEvent e) {
 		try {
@@ -166,17 +182,18 @@ public class ClienteForm extends JFrame {
 		}
 	}
 
-	private void acaoBotaoExcluir(ActionEvent e) {
-		int indice = tabelaClientes.getSelectedRow();
-		if(indice >= 0) {
-			ClienteDAO dao = new ClienteDAO();
-			int decisao = JOptionPane.showConfirmDialog(this, "Deseja excluir o Cliente " + dao.pequisar(indice).getNome(),
-					"Excluir", JOptionPane.YES_NO_CANCEL_OPTION);
-			if (decisao == JOptionPane.OK_OPTION) {
-				dao.excluir(indice);
-				carregarTabela();
-			}
+	private void acaoBotaoEditar(ActionEvent e) {
+		if(this.getTabelaClientes().getSelectedRow() < 0) {
+			JOptionPane.showMessageDialog(this,"selecione um cliente para editar");
+		}else {
+			ClienteController controller = new ClienteController();
+			controller.executaEdicao(this);
 		}
+	}
+	
+	private void acaoBotaoExcluir(ActionEvent e) {
+		ClienteController controller = new ClienteController();
+		controller.executaRemocao(this);
 		
 	}
 
