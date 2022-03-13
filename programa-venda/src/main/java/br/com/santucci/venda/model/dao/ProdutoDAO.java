@@ -1,12 +1,5 @@
 package br.com.santucci.venda.model.dao;
 
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,6 +7,7 @@ import br.com.santucci.venda.model.entity.Produto;
 
 public class ProdutoDAO {
 	private List<Produto> produtos = null;
+	private String nomeDoArquivo = "produtos.txt";
 	
 	public ProdutoDAO() {
 		carregarArquivo();
@@ -21,23 +15,8 @@ public class ProdutoDAO {
 
 	private void carregarArquivo() {
 		
-		
-		try(FileInputStream fis  = new FileInputStream(new File("produtos.txt"))) {
-
-			try {			
-				ObjectInputStream ois = new ObjectInputStream(fis);
-				produtos = (List<Produto>) ois.readObject();
-			}catch(EOFException ex) {
-				System.out.println("Deu erro carregar");
-				produtos = new ArrayList<Produto>();
-			}
-			
-		} catch (Exception e) {
-			produtos = new ArrayList<Produto>();
-			
-		}
-		
-		
+		GerenciadorDeArquivo<Produto> gerenciador = new GerenciadorDeArquivo<>(nomeDoArquivo);
+		produtos = gerenciador.listar();
 	}
 
 	public void salvar(Produto produto) {
@@ -83,14 +62,7 @@ public class ProdutoDAO {
 	}
 	
 	private void salvarArquivo() {
-		try {
-			FileOutputStream fos = new FileOutputStream(new File("produtos.txt"));
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(produtos);
-			oos.close();
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
+		GerenciadorDeArquivo<Produto> gerenciador = new GerenciadorDeArquivo<>(nomeDoArquivo);
+		gerenciador.salvar(produtos);
 	}
 }

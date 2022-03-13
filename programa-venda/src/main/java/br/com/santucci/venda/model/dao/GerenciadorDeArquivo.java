@@ -15,7 +15,7 @@ import java.util.List;
  * @author israel
  *
  * @param <T>
- * Classe para facilitar o salvamento de lista em arquivos e o seu carregamento
+ * Classe para facilitar o salvamento de lista em arquivos e o fazer o seu carregamento
  */
 public class GerenciadorDeArquivo <T>{
 	
