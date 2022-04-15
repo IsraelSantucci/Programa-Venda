@@ -1,6 +1,7 @@
 package br.com.santucci.venda.model.dao;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,14 +33,15 @@ public class ClienteDAO {
 	public void editar(int indice, Cliente cliente) {
 		try {
 			clientes.remove(indice);
-			clientes.add(indice,cliente);
+			clientes.add(indice, cliente);
 			salvarArquivo();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			clientes = gerenciadorDeArquivo.listar();
 		}
-		
+
 	}
+
 	public List<Cliente> getClientes() {
 		return Collections.unmodifiableList(clientes);
 	}
@@ -65,4 +67,24 @@ public class ClienteDAO {
 
 	}
 
+	public int getClienteById(Integer codigo) {
+		for (int i = 0; i < clientes.size(); i++) {
+
+			if (clientes.get(i).getCodigo().equals(codigo)) {
+				System.out.println(i);
+				return i;
+
+			}
+
+		}
+		return -1;
+	}
+
+	public List<Cliente> editar(Cliente cliente, int posicao) {
+		clientes.remove(posicao);
+		clientes.add(posicao, cliente);
+		salvarArquivo();
+		
+		return clientes;
+	}
 }

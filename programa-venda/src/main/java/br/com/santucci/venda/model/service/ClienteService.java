@@ -27,6 +27,16 @@ public class ClienteService {
 	public Cliente pequisar(int indice) {
 		return dao.pequisar(indice);
 	}
+
+	public int existeCliente(Integer codigo) {
+		
+		return dao.getClienteById(codigo);
+		
+	}
+
+	public List<Cliente> editar(Cliente cliente, int posicao) {
+		return dao.editar(cliente,posicao);
+	}
 	
 	
 

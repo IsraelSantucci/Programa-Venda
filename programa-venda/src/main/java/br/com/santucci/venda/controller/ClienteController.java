@@ -30,7 +30,15 @@ public class ClienteController implements InterfaceController{
 		
 		cliente = new Cliente(codigo, nome, cpf, data);
 		
-		List<Cliente> clientes = service.salvar(cliente);
+		int posicao = service.existeCliente(cliente.getCodigo());
+		System.out.println("executando cadastra " + posicao + " cod" + cliente.getCodigo());
+		List<Cliente> clientes;
+		if(posicao < 0) {
+			clientes = service.salvar(cliente);
+		
+		}else {
+			clientes = service.editar(cliente, posicao);
+		}
 		form.carregarTabelateste(clientes);
 	}
 	

@@ -290,6 +290,7 @@ public class ClienteForm extends JFrame {
 		txtNome.setText("");
 		ftxtCpf.setText("");
 		ftxtDataDeNascimento.setText("");
+		
 	}
 	
 	public JTextField getTxtCodigo() {
